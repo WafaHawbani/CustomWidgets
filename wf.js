@@ -99,7 +99,7 @@ var getScriptPromisify = (src) => {
               labelLine: {
                 show: false
               },
-              data, 
+              data:[dimension],
             }
           ]
         };
