@@ -51,7 +51,7 @@ var getScriptPromisify = (src) => {
     }
 
     async render (dataBinding) {
-      await getScriptPromisify("https://wafahawbani.github.io/CustomWidgets/Main.js"); // بشكل غير متزامن يحمل المكتبة (await يعني ينتظر لين تخلص)
+      await getScriptPromisify("https://dasarimadhusapbo.github.io/SankeyWidget/echarts.min.js"); // بشكل غير متزامن يحمل المكتبة (await يعني ينتظر لين تخلص)
       this.dispose() // ينظف اي شيء عليه
 
       if (dataBinding.state !== 'success') { return } // لو مانجت بيرجع
