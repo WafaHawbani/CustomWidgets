@@ -20,7 +20,7 @@ var getScriptPromisify = (src) => {
     return { dimensions, measures, dimensionsMap, measuresMap }
   }
 
-  const appendTotal = (data) => { //there is total here
+  const appendTotal = (data) => {
     data = JSON.parse(JSON.stringify(data))
     const superRoot = {
       dimensions_0: { id: 'total', label: 'Total' },
@@ -55,33 +55,46 @@ var getScriptPromisify = (src) => {
       const links = []
 
       data = appendTotal(data)
-     data.forEach(row => {
-          // dimension
-          categoryData.push(dimensions.map(dimension => {
-            return row[dimension.key].label
-          }).join('/'))
-          // measures
-          series.forEach(series => {
-            series.data.push(row[series.key].raw)
-          })
+      data.forEach(d => {
+        const { label, id, parentId } = d[dimension.key]
+        const { raw } = d[measure.key]
+        nodes.push({ name: label })
+
+        const dParent = data.find(d => {
+          const { id } = d[dimension.key]
+          return id === parentId
         })
-      
-      // https://echarts.apache.org/examples/en/editor.html?c=sankey-levels
-     const myChart = echarts.init(this._root, 'main')
-        const option = {
-          xAxis: {
-            type: 'category',
-            data: categoryData
-          },
-          yAxis: {
-            type: 'value'
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          series
+        if (dParent) {
+          const { label: labelParent } = dParent[dimension.key]
+          links.push({
+            source: labelParent,
+            target: label,
+            value: raw
+          })
         }
-        myChart.setOption(option)
+      })
+      this._echart = echarts.init(this._root)
+      // https://echarts.apache.org/examples/en/editor.html?c=sankey-levels
+      // https://echarts.apache.org/en/option.html
+      this._echart.setOption({
+        title: {
+          text: ''
+        },
+      xAxis: {
+    type: 'category',
+    data: nodes,
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: links,
+      type: 'bar'
+    }
+  ]
+
+      })
     }
 
     dispose () {
