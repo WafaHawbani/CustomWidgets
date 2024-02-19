@@ -87,20 +87,20 @@ var getScriptPromisify = (src) => {
          
             roseType: 'radius',
             label: {
-              color: '#000000'
+              color: 'rgba(255, 255, 255, 0.3)'
             },
             labelLine: {
               lineStyle: {
-                color: '#6aa84f'
+                color: 'rgba(255, 255, 255, 0.3)'
               },
               smooth: 0.2,
               length: 10,
               length2: 20
             },
             itemStyle: {
-              color: '#ffc0cb ',
+              color:'#c23531',
               shadowBlur: 150,
-              shadowColor: 'rgba(0, 0, 0, 0.3)'
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
             },
             animationType: 'scale',
             animationEasing: 'elasticOut',
